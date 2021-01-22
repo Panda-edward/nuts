@@ -6,7 +6,7 @@ import java.util.List;
  * @author : Edward
  * @date : 2021/1/19 下午5:49
  */
-public interface INutsRepository {
+public interface INutsRepository<T> {
 
     /**
      * insert
@@ -14,7 +14,7 @@ public interface INutsRepository {
      * @param po
      * @return
      */
-    boolean save(NutsRetryRecord po);
+    boolean save(T po);
 
     /**
      * update
@@ -27,5 +27,5 @@ public interface INutsRepository {
      * @param count
      * @return
      */
-    List<NutsRetryRecord> queryRetries(int count);
+    List<T> queryRetries(int count);
 }

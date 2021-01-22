@@ -12,7 +12,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class OrderStatusMsgVO implements NutsVO {
 
-    private String orderId;
+    private Long orderId;
 
     private Integer status;
 

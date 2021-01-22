@@ -9,7 +9,7 @@ import com.ed.component.nuts.repository.MybatisNutsRepository;
 import com.ed.component.nuts.repository.mapper.NutsMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,12 +29,11 @@ public class NutsAutoConfiguration {
     }
 
     /**
-     * 提供NutsRepository默认实现
-     * 条件:容器内不存在INutsRepository实现Bean && 容器内存在NutsMapper Bean
+     * 提供NutsRepository默认实现 条件:容器内不存在INutsRepository实现Bean && 容器内存在NutsMapper Bean
      */
     @Bean
     @ConditionalOnMissingBean(INutsRepository.class)
-    @ConditionalOnBean(NutsMapper.class)
+    @ConditionalOnClass(NutsMapper.class)
     public INutsRepository nutsRepository(NutsMapper nutsMapper) {
         log.info("【nuts】容器中无INutsRepository实现bean,注入默认实现");
         MybatisNutsRepository repository = new MybatisNutsRepository();

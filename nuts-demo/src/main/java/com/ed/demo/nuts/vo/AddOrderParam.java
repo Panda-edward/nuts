@@ -14,7 +14,7 @@ import java.util.Date;
 @Accessors(chain = true)
 public class AddOrderParam implements NutsVO {
 
-    private String orderId;
+    private Long orderId;
 
     private Date payTime;
 
@@ -25,6 +25,6 @@ public class AddOrderParam implements NutsVO {
      */
     @Override
     public String getBizNo() {
-        return orderId;
+        return orderId+"";
     }
 }

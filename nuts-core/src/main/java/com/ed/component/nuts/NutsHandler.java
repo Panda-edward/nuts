@@ -80,7 +80,6 @@ public class NutsHandler {
                 long interval = strategy.getInterval() * (po.getRetryCount() + 1) * 1000;
                 nextRetryTime = Long.MAX_VALUE - l > interval ? l + interval : Long.MAX_VALUE;
             }
-            nextRetryTime = Long.MAX_VALUE;
         } else {
             retryStatus = RetryStatus.SUCCESS.getStatus();
             nextRetryTime = Long.MAX_VALUE;

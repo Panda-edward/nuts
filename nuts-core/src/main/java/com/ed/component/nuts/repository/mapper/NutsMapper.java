@@ -4,6 +4,7 @@ import com.ed.component.nuts.repository.NutsRetryRecord;
 import org.apache.ibatis.annotations.*;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author : Edward
@@ -28,9 +29,24 @@ public interface NutsMapper {
      */
     @Update("update " + TABLE_NAME + " set retry_status = #{retryStatus},retry_count = retry_count+1,next_retry_time = #{nextRetryTime},update_time=#{now} where id = #{id}")
     int update(@Param("id") Long id,
-               @Param("retryStatus") Integer retryStatus,
                @Param("nextRetryTime") Long nextRetryTime,
+               @Param("retryStatus") Integer retryStatus,
                @Param("now") Date now);
 
-
+    /**
+     * select
+     */
+    @Results(id = "resultMap", value = {
+            @Result(column = "id", property = "id", id = true),
+            @Result(column = "biz_no", property = "bizNo"),
+            @Result(column = "biz_type", property = "bizType"),
+            @Result(column = "params", property = "params"),
+            @Result(column = "retry_status", property = "retryStatus"),
+            @Result(column = "retry_count", property = "retryCount"),
+            @Result(column = "next_retry_time", property = "nextRetryTime"),
+            @Result(column = "create_time", property = "createTime"),
+            @Result(column = "update_time", property = "updateTime")
+    })
+    @Select("select " + COLUMNS + " from " + TABLE_NAME + " where next_retry_time < #{nextRetryTime} and retry_status < 2 order by next_retry_time  limit #{count}")
+    List<NutsRetryRecord> selectRetryList(@Param("nextRetryTime") Long nextRetryTime,@Param("count") Integer count);
 }
